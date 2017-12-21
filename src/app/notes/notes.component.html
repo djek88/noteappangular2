@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search" #searchBox (keyup)="search(searchBox.value)">
+      <div class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)="toggleAddMode()">{{addMode ? 'Cancel' : 'Add note'}}</button>
+        <button class="btn btn-default" type="button" (click)="reshape()">Reshape</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <ul class="notes">
+      <li *ngIf="addMode">
+        <sticky-note (onSave)="addNote($event)" (onCancel)="toggleAddMode()"></sticky-note>
+      </li>
+      <li *ngFor="let note of notes; let i=index">
+        <sticky-note
+          [note]="note"
+          (onSave)="updateNote($event, i)"
+          (onDetail)="gotoDetail(note)"
+          (onDelete)="deleteNote(note)">
+        </sticky-note>
+      </li>
+    </ul>
+  </div>
+</div>

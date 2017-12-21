@@ -1,0 +1,8 @@
+.notes li {
+  margin: 10px 50px 50px 0px;
+  float: left;
+}
+
+ul.notes li {
+  list-style: none;
+}

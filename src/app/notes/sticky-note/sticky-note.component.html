@@ -1,0 +1,27 @@
+<div [class]="'note ' + (editMode ? 'bg-0 rotate-360' : noteClasses)">
+  <ng-container *ngIf="!editMode && !addMode">
+    <small [appDateToggle]="note.createdAt"></small>
+    <p class="title" (click)="editMode = true">{{note.title}}</p>
+    <p class="content" (click)="editMode = true">{{note.content}}</p>
+  </ng-container>
+
+  <div class="edit-form" *ngIf="editMode">
+    <note-edit-form [note]="note" (onDone)="save($event)">
+      <button type="submit" class="note-btn save">
+        <i class="fa fa-check-square-o" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="note-btn cancel" [class.add-mode]="addMode" (click)="cancel()">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </button>
+    </note-edit-form>
+  </div>
+
+  <ng-container *ngIf="!addMode">
+    <a class="note-btn detail" (click)="onDetail.emit()">
+      <i class="fa fa-info" aria-hidden="true"></i>
+    </a>
+    <a class="note-btn delete" (click)="onDelete.emit()">
+      <i class="fa fa-trash-o" aria-hidden="true"></i>
+    </a>
+  </ng-container>
+</div>
