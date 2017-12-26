@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 
 import { Subscription }   from 'rxjs/Subscription';
 
-import { Note } from '../../note';
+import { Note } from '../note';
 
 import { ReshapeService } from '../reshape.service';
 

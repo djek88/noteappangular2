@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Note } from '../../../note';
+import { Note } from '../../note';
 
 @Component({
   selector: 'note-edit-form',
