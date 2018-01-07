@@ -1,21 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Router }                       from '@angular/router';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject }       from 'rxjs/Subject';
 import { ISubscription } from "rxjs/Subscription";
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import { Note } from './note';
-import { NoteService } from './note.service';
-import { ReshapeService } from './reshape.service';
+import { Note }           from './shared/note';
+import { NoteService }    from './shared/note.service';
+import { ReshapeService } from './shared/reshape.service';
 
 @Component({
   selector: 'notes',
   templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.css'],
-  providers: [ReshapeService]
+  styleUrls: ['./notes.component.css']
 })
 export class NotesComponent implements OnInit, OnDestroy {
   notes: Note[] = [];
@@ -26,7 +25,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   constructor(
     private noteService: NoteService,
     private reshapeService: ReshapeService,
-    /*private router: Router*/) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.searchTerms = new Subject<string>();
@@ -60,7 +59,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   gotoDetail(note: Note): void {
-    /*this.router.navigate(['detail', note.id]);*/
+    //this.router.navigate(['notes/detail', note.id]);
   }
 
   addNote(note: Note): void {

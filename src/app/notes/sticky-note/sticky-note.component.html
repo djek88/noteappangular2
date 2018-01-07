@@ -6,14 +6,14 @@
   </ng-container>
 
   <div class="edit-form" *ngIf="editMode">
-    <note-edit-form [note]="note" (onDone)="save($event)">
+    <app-note-edit-form [note]="note" (onDone)="save($event)">
       <button type="submit" class="note-btn save">
         <i class="fa fa-check-square-o" aria-hidden="true"></i>
       </button>
       <button type="button" class="note-btn cancel" [class.add-mode]="addMode" (click)="cancel()">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
-    </note-edit-form>
+    </app-note-edit-form>
   </div>
 
   <ng-container *ngIf="!addMode">

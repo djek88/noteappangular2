@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Note } from '../../note';
+import { Note } from '../../shared/note';
 
 @Component({
-  selector: 'note-edit-form',
+  selector: 'app-note-edit-form',
   templateUrl: './note-edit-form.component.html',
   styleUrls: ['./note-edit-form.component.css']
 })

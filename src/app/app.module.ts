@@ -1,14 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { NgModule }      from '@angular/core';
+import { HttpModule }    from '@angular/http';
 
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './in-memory-data.service';
+import { CoreModule }       from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-
-//import { AppRoutingModule } from './app-routing.module';
-import { NotesModule } from './notes/notes.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +13,11 @@ import { NotesModule } from './notes/notes.module';
   ],
   imports: [
     BrowserModule,
-    //AppRoutingModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500 }),
-    NotesModule
+    CoreModule,
+    AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

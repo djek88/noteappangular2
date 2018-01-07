@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 
-import { Subscription }   from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
-import { Note } from '../note';
+import { Note } from '../shared/note';
 
-import { ReshapeService } from '../reshape.service';
+import { ReshapeService } from '../shared/reshape.service';
 
 @Component({
-  selector: 'sticky-note',
+  selector: 'app-sticky-note',
   templateUrl: './sticky-note.component.html',
   styleUrls: ['./sticky-note.component.css']
 })

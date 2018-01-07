@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 
 @Directive({
   selector: '[appDateToggle]',
-  providers: [DatePipe]
+  providers: [ DatePipe ]
 })
 export class DateToggleDirective implements OnInit {
   private dateFormats: string[] = ['medium', 'short', 'fullDate', 'longDate', 'mediumDate', 'shortDate'];

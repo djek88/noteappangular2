@@ -1,28 +1,30 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule }   from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-import { NotesComponent } from './notes.component';
-import { StickyNoteComponent } from './sticky-note/sticky-note.component';
-import { NoteEditFormComponent } from './sticky-note/note-edit-form/note-edit-form.component';
-import { DateToggleDirective } from './sticky-note/date-toggle.directive';
+import { SharedModule }       from '../shared/shared.module';
+import { NotesRoutingModule } from './notes-routing.module'
 
-import { NoteService } from './note.service';
+import { NotesComponent }        from './notes.component';
+import { StickyNoteComponent }   from './sticky-note/sticky-note.component';
+import { NoteEditFormComponent } from './sticky-note/note-edit-form/note-edit-form.component';
+
+import { NoteService }    from './shared/note.service';
+import { ReshapeService } from './shared/reshape.service';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    HttpModule
+    HttpModule,
+    SharedModule,
+    NotesRoutingModule
   ],
   declarations: [
     NotesComponent,
     StickyNoteComponent,
-    NoteEditFormComponent,
-    DateToggleDirective
+    NoteEditFormComponent
   ],
-  providers: [NoteService],
-  exports: [NotesComponent]
+  providers: [
+    NoteService,
+    ReshapeService
+  ]
 })
 export class NotesModule { }

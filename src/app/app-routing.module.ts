@@ -1,16 +1,18 @@
-import { NgModule } from '@angular/core';
+import { NgModule }             from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { NotesComponent } from './notes/notes.component';
+import { NotesModule } from './notes/notes.module';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/notes', pathMatch: 'full' },
-  { path: 'notes', component: NotesComponent },
-  // { path: 'detail/:id', component: NotesComponent }
+  { path: '', redirectTo: 'notes', pathMatch: 'full' },
+  { path: '**', redirectTo: 'notes', pathMatch: 'full'}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    NotesModule,
+    RouterModule.forRoot(routes, { enableTracing: true })
+  ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule { }

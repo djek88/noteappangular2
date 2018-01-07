@@ -11,15 +11,15 @@
   <div class="col-md-9">
     <ul class="notes">
       <li *ngIf="addMode">
-        <sticky-note (onSave)="addNote($event)" (onCancel)="toggleAddMode()"></sticky-note>
+        <app-sticky-note (onSave)="addNote($event)" (onCancel)="toggleAddMode()"></app-sticky-note>
       </li>
       <li *ngFor="let note of notes; let i=index">
-        <sticky-note
+        <app-sticky-note
           [note]="note"
           (onSave)="updateNote($event, i)"
           (onDetail)="gotoDetail(note)"
           (onDelete)="deleteNote(note)">
-        </sticky-note>
+        </app-sticky-note>
       </li>
     </ul>
   </div>
