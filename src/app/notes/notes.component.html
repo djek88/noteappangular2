@@ -1,14 +1,15 @@
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-4">
     <div class="input-group">
       <input type="text" class="form-control" placeholder="Search" #searchBox (keyup)="search(searchBox.value)">
       <div class="input-group-btn">
         <button class="btn btn-default" type="button" (click)="toggleAddMode()">{{addMode ? 'Cancel' : 'Add note'}}</button>
         <button class="btn btn-default" type="button" (click)="reshape()">Reshape</button>
+        <button class="btn btn-default" type="button" (click)="resetNotes()">Reset Notes</button>
       </div>
     </div>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-8">
     <ul class="notes">
       <li *ngIf="addMode">
         <app-sticky-note (onSave)="addNote($event)" (onCancel)="toggleAddMode()"></app-sticky-note>

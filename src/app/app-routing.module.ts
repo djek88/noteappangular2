@@ -1,5 +1,5 @@
 import { NgModule }             from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { NotesModule } from './notes/notes.module';
 
@@ -11,7 +11,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     NotesModule,
-    RouterModule.forRoot(routes, { enableTracing: true })
+    RouterModule.forRoot(routes, { enableTracing: false })
   ],
   exports: [ RouterModule ]
 })

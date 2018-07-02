@@ -1,11 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router }                       from '@angular/router';
 
-import { Subject }       from 'rxjs/Subject';
-import { ISubscription } from "rxjs/Subscription";
-
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
+import { Subject, SubscriptionLike, forkJoin } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { Note }           from './shared/note';
 import { NoteService }    from './shared/note.service';
@@ -19,7 +16,7 @@ import { ReshapeService } from './shared/reshape.service';
 export class NotesComponent implements OnInit, OnDestroy {
   notes: Note[] = [];
   searchTerms: Subject<string>;
-  private subscription: ISubscription;
+  private subscription: SubscriptionLike;
   addMode: boolean = false;
 
   constructor(
@@ -29,14 +26,15 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchTerms = new Subject<string>();
-    this.subscription = this.searchTerms
-      .debounceTime(400)
-      .distinctUntilChanged()
+    this.subscription = this.searchTerms.pipe(
+        debounceTime(400),
+        distinctUntilChanged()
+      )
       .subscribe(value => {
-        Promise.all([
+        forkJoin(
           this.noteService.getNotes([{key: 'title', value}]),
           this.noteService.getNotes([{key: 'content', value}])
-        ]).then((findedNotes: Note[][]) => {
+        ).subscribe((findedNotes: Note[][]) => {
           const results = new Map();
 
           findedNotes[0].concat(...findedNotes[1]).forEach(note => results.set(note.id, note));
@@ -44,8 +42,7 @@ export class NotesComponent implements OnInit, OnDestroy {
         });
       });
 
-    this.noteService.getNotes()
-      .then(notes => this.notes = notes);
+    this.getNotes();
   }
 
   ngOnDestroy(): void {
@@ -58,6 +55,11 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.searchTerms.next(term);
   }
 
+  getNotes(): void {
+    this.noteService.getNotes()
+      .subscribe(notes => this.notes = notes);
+  }
+
   gotoDetail(note: Note): void {
     //this.router.navigate(['notes/detail', note.id]);
   }
@@ -65,17 +67,17 @@ export class NotesComponent implements OnInit, OnDestroy {
   addNote(note: Note): void {
     this.toggleAddMode();
     this.noteService.create(note)
-      .then(this.notes.push.bind(this.notes));
+      .subscribe(this.notes.push.bind(this.notes));
   }
 
   updateNote(updatedNote: Note, i: number): void {
     this.noteService.update(updatedNote)
-      .then(note => Object.assign(this.notes[i], note));
+      .subscribe(note => Object.assign(this.notes[i], note));
   }
 
   deleteNote(note: Note): void {
     this.noteService.delete(note.id)
-      .then(() => this.notes = this.notes.filter(n => n !== note));
+      .subscribe(() => this.notes = this.notes.filter(n => n !== note));
   }
 
   toggleAddMode(): void {
@@ -84,5 +86,10 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   reshape(): void {
     this.reshapeService.requestReshape();
+  }
+
+  resetNotes(): void {
+    this.noteService.resetNotes()
+      .subscribe(() => this.getNotes());
   }
 }

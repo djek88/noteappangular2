@@ -1,5 +1,5 @@
 import { NgModule }   from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SharedModule }       from '../shared/shared.module';
 import { NotesRoutingModule } from './notes-routing.module'
@@ -13,7 +13,7 @@ import { ReshapeService } from './shared/reshape.service';
 
 @NgModule({
   imports: [
-    HttpModule,
+    HttpClientModule,
     SharedModule,
     NotesRoutingModule
   ],

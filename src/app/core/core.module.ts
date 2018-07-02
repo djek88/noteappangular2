@@ -9,7 +9,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 @NgModule({
   imports: [
     CommonModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500 })
+    InMemoryWebApiModule.forRoot(
+      InMemoryDataService, { delay: 500, dataEncapsulation: false }
+    )
   ],
   declarations: [ NavbarComponent ],
   exports: [ NavbarComponent ]
