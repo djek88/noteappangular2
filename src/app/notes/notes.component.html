@@ -14,7 +14,7 @@
       <li *ngIf="addMode">
         <app-sticky-note (onSave)="addNote($event)" (onCancel)="toggleAddMode()"></app-sticky-note>
       </li>
-      <li *ngFor="let note of notes; let i=index">
+      <li *ngFor="let note of notes; let i = index">
         <app-sticky-note
           [note]="note"
           (onSave)="updateNote($event, i)"

@@ -1,10 +1,13 @@
 <div [class]="'note ' + (editMode ? 'bg-0 rotate-360' : noteClasses)">
+  <!-- view mode block -->
   <ng-container *ngIf="!editMode && !addMode">
     <small [appDateToggle]="note.createdAt"></small>
     <p class="title" (click)="editMode = true">{{note.title}}</p>
     <p class="content" (click)="editMode = true">{{note.content}}</p>
   </ng-container>
+  <!-- end view mode block -->
 
+  <!-- edit mode block -->
   <div class="edit-form" *ngIf="editMode">
     <app-note-edit-form [note]="note" (onDone)="save($event)">
       <button type="submit" class="note-btn save">
@@ -15,6 +18,7 @@
       </button>
     </app-note-edit-form>
   </div>
+  <!-- end edit mode block -->
 
   <ng-container *ngIf="!addMode">
     <a class="note-btn detail" (click)="onDetail.emit()">

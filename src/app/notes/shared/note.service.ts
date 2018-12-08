@@ -29,14 +29,16 @@ export class NoteService {
       url += `${index === 0 ? '/?' : '&&'}${param.key}=${param.value}`;
     });
 
-    return this.httpClient.get<Note[]>(url)
+    return this.httpClient
+      .get<Note[]>(url)
       .pipe(catchError(this.handleError));
   }
 
   getNote(id: number): Observable<Note> {
     const url = `${this.notesUrl}/${id}`;
 
-    return this.httpClient.get<Note>(url)
+    return this.httpClient
+      .get<Note>(url)
       .pipe(catchError(this.handleError));
   }
 

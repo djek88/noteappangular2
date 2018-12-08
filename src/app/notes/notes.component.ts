@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router }                       from '@angular/router';
 
 import { Subject, SubscriptionLike, forkJoin } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged }  from 'rxjs/operators';
 
 import { Note }           from './shared/note';
 import { NoteService }    from './shared/note.service';
@@ -26,21 +26,10 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchTerms = new Subject<string>();
-    this.subscription = this.searchTerms.pipe(
-        debounceTime(400),
-        distinctUntilChanged()
-      )
-      .subscribe(value => {
-        forkJoin(
-          this.noteService.getNotes([{key: 'title', value}]),
-          this.noteService.getNotes([{key: 'content', value}])
-        ).subscribe((findedNotes: Note[][]) => {
-          const results = new Map();
-
-          findedNotes[0].concat(...findedNotes[1]).forEach(note => results.set(note.id, note));
-          this.notes = Array.from(results.values()).sort((a, b) => a.id - b.id);
-        });
-      });
+    this.subscription = this.searchTerms
+      .pipe(debounceTime(400))
+      .pipe(distinctUntilChanged())
+      .subscribe(this.searchNotes.bind(this));
 
     this.getNotes();
   }
@@ -55,13 +44,26 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.searchTerms.next(term);
   }
 
+  searchNotes(value) {
+    forkJoin(
+      this.noteService.getNotes([{key: 'title', value}]),
+      this.noteService.getNotes([{key: 'content', value}])
+    ).subscribe((findedNotes: Note[][]) => {
+      const results = new Map();
+
+      findedNotes[0].concat(...findedNotes[1])
+        .forEach(note => results.set(note.id, note));
+      this.notes = Array.from(results.values()).sort((a, b) => a.id - b.id);
+    });
+  }
+
   getNotes(): void {
     this.noteService.getNotes()
       .subscribe(notes => this.notes = notes);
   }
 
   gotoDetail(note: Note): void {
-    //this.router.navigate(['notes/detail', note.id]);
+    this.router.navigate(['notes', note.id]); 
   }
 
   addNote(note: Note): void {
