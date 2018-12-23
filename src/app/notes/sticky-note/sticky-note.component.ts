@@ -14,8 +14,8 @@ import { ReshapeService } from '../shared/reshape.service';
 export class StickyNoteComponent implements OnInit, OnDestroy {
   @Input() note: Note;
   noteClasses: string;
-  editMode: boolean = false;
-  addMode: boolean = false;
+  editMode = false;
+  addMode = false;
   subscription: Subscription;
 
   @Output() onSave: EventEmitter<Note> = new EventEmitter();

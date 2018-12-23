@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router }                       from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Subject, SubscriptionLike, forkJoin } from 'rxjs';
-import { debounceTime, distinctUntilChanged }  from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
-import { Note }           from './shared/note';
-import { NoteService }    from './shared/note.service';
+import { Note } from './shared/note';
+import { NoteService } from './shared/note.service';
 import { ReshapeService } from './shared/reshape.service';
 
 @Component({
-  selector: 'notes',
+  selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css']
 })
@@ -17,7 +17,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   notes: Note[] = [];
   searchTerms: Subject<string>;
   private subscription: SubscriptionLike;
-  addMode: boolean = false;
+  addMode = false;
 
   constructor(
     private noteService: NoteService,
@@ -46,8 +46,8 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   searchNotes(value) {
     forkJoin(
-      this.noteService.getNotes([{key: 'title', value}]),
-      this.noteService.getNotes([{key: 'content', value}])
+      this.noteService.getNotes([{ key: 'title', value }]),
+      this.noteService.getNotes([{ key: 'content', value }])
     ).subscribe((findedNotes: Note[][]) => {
       const results = new Map();
 
@@ -63,7 +63,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   gotoDetail(note: Note): void {
-    this.router.navigate(['notes', note.id]); 
+    this.router.navigate(['notes', note.id]);
   }
 
   addNote(note: Note): void {
