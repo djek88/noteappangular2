@@ -27,7 +27,7 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
     this.reshape();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.subscription = this.reshapeService.reshapeRequested$.subscribe(() => this.reshape());
 
     if (!this.note) {
@@ -36,22 +36,22 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  save(note: Note): void {
+  save(note: Note) {
     this.addMode = false;
     this.editMode = false;
     this.onSave.emit(note);
   }
 
-  cancel(): void {
+  cancel() {
     this.editMode = false;
     this.onCancel.emit();
   }
 
-  private reshape(): void {
+  private reshape() {
     this.noteClasses = `rotate-${this.getRandomInt(1, 4)} bg-${this.getRandomInt(1, 6)}`;
   }
 
