@@ -24,17 +24,19 @@ export class NotesComponent implements OnInit, OnDestroy {
     private reshapeService: ReshapeService,
     private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.searchTerms = new Subject<string>();
     this.subscription = this.searchTerms
-      .pipe(debounceTime(400))
-      .pipe(distinctUntilChanged())
+      .pipe(
+        debounceTime(400),
+        distinctUntilChanged()
+      )
       .subscribe(this.searchNotes.bind(this));
 
     this.getNotes();
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
@@ -57,40 +59,40 @@ export class NotesComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNotes(): void {
+  getNotes() {
     this.noteService.getNotes()
       .subscribe(notes => this.notes = notes);
   }
 
-  gotoDetail(note: Note): void {
+  gotoDetail(note: Note) {
     this.router.navigate(['notes', note.id]);
   }
 
-  addNote(note: Note): void {
+  addNote(note: Note) {
     this.toggleAddMode();
     this.noteService.create(note)
       .subscribe(this.notes.push.bind(this.notes));
   }
 
-  updateNote(updatedNote: Note, i: number): void {
+  updateNote(updatedNote: Note, i: number) {
     this.noteService.update(updatedNote)
       .subscribe(note => Object.assign(this.notes[i], note));
   }
 
-  deleteNote(note: Note): void {
+  deleteNote(note: Note) {
     this.noteService.delete(note.id)
       .subscribe(() => this.notes = this.notes.filter(n => n !== note));
   }
 
-  toggleAddMode(): void {
+  toggleAddMode() {
     this.addMode = !this.addMode;
   }
 
-  reshape(): void {
+  reshape() {
     this.reshapeService.requestReshape();
   }
 
-  resetNotes(): void {
+  resetNotes() {
     this.noteService.resetNotes()
       .subscribe(() => this.getNotes());
   }
