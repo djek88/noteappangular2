@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { NotesRoutingModule } from './notes-routing.module';
@@ -15,6 +16,7 @@ import { ReshapeService } from './shared/reshape.service';
 @NgModule({
   imports: [
     HttpClientModule,
+    ReactiveFormsModule,
     SharedModule,
     NotesRoutingModule
   ],
