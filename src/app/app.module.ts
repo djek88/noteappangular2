@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
+import { NotesModule } from './notes/notes.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { httpInterceptorProviders } from './http-interceptors';
     BrowserModule,
     HttpClientModule,
     CoreModule,
+    NotesModule,
     AppRoutingModule
   ],
   declarations: [
