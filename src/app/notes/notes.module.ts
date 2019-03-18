@@ -12,6 +12,7 @@ import { NoteDetailComponent } from './note-detail/note-detail.component';
 
 import { NoteService } from './shared/note.service';
 import { ReshapeService } from './shared/reshape.service';
+import { UniqueTitleValidator } from './shared/unique-title.validator';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { ReshapeService } from './shared/reshape.service';
   ],
   providers: [
     NoteService,
-    ReshapeService
+    ReshapeService,
+    UniqueTitleValidator,
   ]
 })
 export class NotesModule { }

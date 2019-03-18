@@ -11,7 +11,7 @@ interface RequestParam {
   value: string;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NoteService {
   private notesUrl = 'api/notes';
   private httpOptions = {
@@ -92,5 +92,11 @@ export class NoteService {
     return this.httpClient
       .post('commands/resetdb', { clear: true })
       .pipe(catchError(this.handleError));
+  }
+
+  isTitleTaken(title: string): Observable<boolean> {
+    return this.getNotes().pipe(
+      map(notes => notes.some(n => n.title === title))
+    );
   }
 }
