@@ -12,7 +12,7 @@ import { UniqueTitleValidator } from '../../shared/unique-title.validator';
 })
 export class NoteEditFormComponent implements OnInit {
   @Input() note: Note;
-  @Output() onDone: EventEmitter<Note> = new EventEmitter();
+  @Output() submit: EventEmitter<Note> = new EventEmitter();
 
   noteForm: FormGroup;
 
@@ -33,7 +33,7 @@ export class NoteEditFormComponent implements OnInit {
         [ Validators.required, Validators.minLength(3) ]
       ],
     }, {
-      validators: [forbiddenNoteEqualityValidator] // <-- add custom validator at the FormGroup level
+      validators: [ forbiddenNoteEqualityValidator ] // <-- add custom validator at the FormGroup level
     });
   }
 
@@ -43,7 +43,7 @@ export class NoteEditFormComponent implements OnInit {
       note.title = this.noteForm.value.title;
       note.content = this.noteForm.value.content;
 
-      this.onDone.emit(note);
+      this.submit.emit(note);
     } else {
       console.error('Form errors: ', this.noteForm.errors);
       console.error('Title errors: ', this.noteForm.get('title').errors);

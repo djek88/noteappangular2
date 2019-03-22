@@ -9,11 +9,11 @@
 
   <!-- edit mode block -->
   <div class="edit-form" *ngIf="editMode">
-    <app-note-edit-form [note]="note" (onDone)="save($event)">
+    <app-note-edit-form [note]="note" (submit)="saveEmit($event)">
       <button type="submit" class="note-btn save">
         <i class="fa fa-check-square-o" aria-hidden="true"></i>
       </button>
-      <button type="button" class="note-btn cancel" [class.add-mode]="addMode" (click)="cancel()">
+      <button type="button" class="note-btn cancel" [class.add-mode]="addMode" (click)="cancelEmit()">
         <i class="fa fa-times" aria-hidden="true"></i>
       </button>
     </app-note-edit-form>
@@ -21,10 +21,10 @@
   <!-- end edit mode block -->
 
   <ng-container *ngIf="!addMode">
-    <a class="note-btn detail" (click)="onDetail.emit()">
+    <a class="note-btn detail" (click)="detail.emit()">
       <i class="fa fa-info" aria-hidden="true"></i>
     </a>
-    <a class="note-btn delete" (click)="onDelete.emit()">
+    <a class="note-btn delete" (click)="delete.emit()">
       <i class="fa fa-trash-o" aria-hidden="true"></i>
     </a>
   </ng-container>

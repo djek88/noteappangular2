@@ -4,5 +4,5 @@ export const forbiddenNoteEqualityValidator: ValidatorFn = (control: FormGroup):
   const title = control.get('title');
   const content = control.get('content');
 
-  return title && content && title.value === content.value ? { 'equalityRevealed': true } : null;
+  return title && content && title.value === content.value ? { equalityRevealed: true } : null;
 };

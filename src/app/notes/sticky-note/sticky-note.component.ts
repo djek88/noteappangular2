@@ -18,10 +18,10 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
   addMode = false;
   subscription: Subscription;
 
-  @Output() onSave: EventEmitter<Note> = new EventEmitter();
-  @Output() onDelete: EventEmitter<null> = new EventEmitter();
-  @Output() onDetail: EventEmitter<null> = new EventEmitter();
-  @Output() onCancel: EventEmitter<null> = new EventEmitter();
+  @Output() save: EventEmitter<Note> = new EventEmitter();
+  @Output() delete: EventEmitter<null> = new EventEmitter();
+  @Output() detail: EventEmitter<null> = new EventEmitter();
+  @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   constructor(private reshapeService: ReshapeService) {
     this.reshape();
@@ -40,15 +40,15 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  save(note: Note) {
+  saveEmit(note: Note) {
     this.addMode = false;
     this.editMode = false;
-    this.onSave.emit(note);
+    this.save.emit(note);
   }
 
-  cancel() {
+  cancelEmit() {
     this.editMode = false;
-    this.onCancel.emit();
+    this.cancel.emit();
   }
 
   private reshape() {

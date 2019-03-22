@@ -80,7 +80,7 @@ export class NoteService {
       );
   }
 
-  delete(id: number): Observable<Object> {
+  delete(id: number): Observable<object> {
     const url = `${this.notesUrl}/${id}`;
 
     return this.httpClient
@@ -88,7 +88,7 @@ export class NoteService {
       .pipe(catchError(this.handleError));
   }
 
-  resetNotes(): Observable<Object> {
+  resetNotes(): Observable<object> {
     return this.httpClient
       .post('commands/resetdb', { clear: true })
       .pipe(catchError(this.handleError));
