@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, ReplaySubject } from 'rxjs';
 
 import { Note } from '../shared/note';
 
 import { ReshapeService } from '../shared/reshape.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sticky-note',
@@ -16,19 +17,22 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
   noteClasses: string;
   editMode = false;
   addMode = false;
-  subscription: Subscription;
 
   @Output() save: EventEmitter<Note> = new EventEmitter();
   @Output() delete: EventEmitter<null> = new EventEmitter();
   @Output() detail: EventEmitter<null> = new EventEmitter();
   @Output() cancel: EventEmitter<null> = new EventEmitter();
 
+  private unsubscribe = new ReplaySubject<any>(1);
+
   constructor(private reshapeService: ReshapeService) {
     this.reshape();
   }
 
   ngOnInit() {
-    this.subscription = this.reshapeService.reshapeRequested$.subscribe(() => this.reshape());
+    this.reshapeService.reshapeRequested$
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(this.reshape.bind(this));
 
     if (!this.note) {
       this.addMode = true;
@@ -37,7 +41,8 @@ export class StickyNoteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
   }
 
   saveEmit(note: Note) {

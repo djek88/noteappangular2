@@ -9,7 +9,6 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class NoopInterceptor implements HttpInterceptor {
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // logging req object
     console.log(req);
